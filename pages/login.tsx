@@ -1,13 +1,11 @@
 import {
   Box,
   Button,
-  Checkbox,
   Flex,
   FormControl,
   FormLabel,
   Heading,
   Input,
-  Link,
   Stack,
   Text,
   useToast
@@ -19,6 +17,7 @@ import {Auth} from "../external-api/supabase/auth";
 const Login: NextPage = () => {
   const toast = useToast();
   const [email, setEmail] = useState("")
+  const [loading, setLoading] = useState(false)
 
   const showToast = (status: "success" | "error", title: string) => {
     const id = "toast-id"
@@ -28,8 +27,10 @@ const Login: NextPage = () => {
   }
 
   const onLogin = async () => {
+    setLoading(true)
     try {
       const {error} = await Auth.handleSignIn(email)
+      setLoading(false)
       if (error) throw error;
       showToast("success", "Successfully sent magic link to your email!");
     } catch (error: any) {
@@ -67,6 +68,8 @@ const Login: NextPage = () => {
             </FormControl>
             <Stack spacing={10}>
               <Button
+                isLoading={loading}
+                loadingText='Sending magic link'
                 onClick={onLogin}
                 colorScheme={"teal"}>
                 Send my magic link
