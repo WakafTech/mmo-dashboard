@@ -23,8 +23,13 @@ export const Hero = () => {
             MMOs in Singapore
           </Text>
         </Heading>
-        <Text fontSize={{ base: "sm", sm: "xl", md: "2xl" }} fontWeight={"semibold"} color={"gray.600"}>
-           Built to equip MMOs in Singapore with data-centric tools that delightful for end-users.
+        <Text
+          fontSize={{ base: "sm", sm: "xl", md: "2xl" }}
+          fontWeight={"semibold"}
+          color={"gray.600"}
+        >
+          Built to equip MMOs in Singapore with data-centric tools that are
+          delightful for end-users.
         </Text>
         <Stack
           py="8"
@@ -33,11 +38,11 @@ export const Hero = () => {
           align={"center"}
           alignSelf={"center"}
         >
-          <Button colorScheme='teal' size='lg' px={12} fontWeight="bold">
-            <Link href={"/login"}>
-    Sign In
-            </Link>
-  </Button>
+          <Link href={"/login"}>
+            <Button colorScheme="teal" size="lg" px={12} fontWeight="bold">
+              Sign In
+            </Button>
+          </Link>
           <Button variant="ghost">Request Access</Button>
         </Stack>
       </Stack>
