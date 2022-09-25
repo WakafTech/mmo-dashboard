@@ -1,21 +1,16 @@
 import supabase from "./client";
-import {NextRouter} from "next/router";
+import { supabaseClient } from '@supabase/auth-helpers-nextjs'
+
 
 const handleSignIn = async (email: string) => {
   return await supabase.auth.signIn({email}, {shouldCreateUser: false});
 }
 
-const handleOnAuthStateChange = (router: NextRouter) => {
-  supabase.auth.onAuthStateChange((_event) => {
-    if (_event !== 'SIGNED_OUT') {
-      router.push('/dashboard');
-    } else {
-      router.push('/login');
-    }
-  });
+const handleSignOut = async () => {
+  return await supabaseClient.auth.signOut()
 }
 
 export const Auth = {
   handleSignIn,
-  handleOnAuthStateChange
+  handleSignOut,
 }
