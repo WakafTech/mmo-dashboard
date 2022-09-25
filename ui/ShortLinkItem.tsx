@@ -1,12 +1,5 @@
 import {
-  Box,
-  Stat,
-  StatArrow,
-  StatGroup,
-  StatHelpText,
-  StatLabel,
-  StatNumber,
-  Text,
+  Box, Text
 } from "@chakra-ui/react";
 
 interface Props {
@@ -16,10 +9,10 @@ interface Props {
 
 export const ShortLinkItem = ({ path, destination }: Props) => {
   return (
-    <Box bg="white" rounded={8} shadow={4} p={4}>
+    <Box bg="white" rounded={8} shadow={4} p={4} minW={"200"}>
       <Text fontWeight={"bold"} fontSize={"xl"}>
         go.mmo.sg/
-        <Text as="span" color={"blue.500"}>
+        <Text as="span" color={"teal.500"}>
           {path}
         </Text>
       </Text>

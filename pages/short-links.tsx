@@ -1,5 +1,6 @@
-import { Box, Heading, SimpleGrid, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, SimpleGrid, Text } from "@chakra-ui/react";
 import { NextApiRequest } from "next";
+import Link from "next/link";
 import { Db } from "../external-api/supabase/db";
 import { ShortLink } from "../types/short-link";
 import { AppShell } from "../ui/AppShell";
@@ -23,8 +24,11 @@ interface Props {
 const ShortLinks = ({ shortLinks }: Props) => {
   return (
     <AppShell>
-      <Heading>Short Links</Heading>
-      <SimpleGrid columns={[1, null, 2, 3, 4]} spacing="6" py={"20px"}>
+      <Flex justifyContent={"space-between"}>
+        <Heading>Short Links</Heading>
+        <Link href={"/create-short-link"}><Button colorScheme={"teal"}>Create Short Link</Button></Link>
+      </Flex>
+      <SimpleGrid columns={[1, null, null, 2, 3, 4]} spacing="6" py={"40px"}>
         {shortLinks?.map((shortLink) => (
           <ShortLinkItem
             path={shortLink.path}

@@ -1,6 +1,7 @@
 import {
   Box,
   BoxProps,
+  Button,
   CloseButton,
   Drawer,
   DrawerContent,
@@ -9,6 +10,7 @@ import {
   Icon,
   IconButton,
   Link,
+  Spacer,
   Text,
   useColorModeValue,
   useDisclosure,
@@ -16,13 +18,14 @@ import {
 import { ReactNode } from "react";
 import { IconType } from "react-icons";
 import {
-  FiCompass,
-  FiHome,
-  FiMenu,
-  FiSettings,
-  FiStar,
-  FiTrendingUp,
-} from "react-icons/fi";
+  FaHandHoldingHeart,
+  FaDonate,
+  FaLink,
+  FaClipboard,
+  FaChartLine,
+  FaDoorOpen,
+} from "react-icons/fa";
+import { FiMenu } from "react-icons/fi";
 import NextLink from "next/link";
 
 interface LinkItemProps {
@@ -32,11 +35,11 @@ interface LinkItemProps {
 }
 
 const LinkItems: Array<LinkItemProps> = [
-  { name: "Dashboard", icon: FiHome, path: "/dashboard" },
-  { name: "Short Links", icon: FiTrendingUp, path: "/short-links" },
-  { name: "Services", icon: FiCompass, path: "/services" },
-  { name: "Donation Methods", icon: FiSettings, path: "/donation-methods" },
-  { name: "About", icon: FiStar, path: "/about" },
+  { name: "Dashboard", icon: FaChartLine, path: "/dashboard" },
+  { name: "Short Links", icon: FaLink, path: "/short-links" },
+  { name: "Services", icon: FaHandHoldingHeart, path: "/services" },
+  { name: "Donation Methods", icon: FaDonate, path: "/donation-methods" },
+  { name: "About", icon: FaClipboard, path: "/about" },
 ];
 
 interface Props {
@@ -88,17 +91,37 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       h="full"
       {...rest}
     >
-      <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        <Text fontSize="2xl" fontWeight="extrabold">
-          MMO Toolkit
-        </Text>
-        <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
+      <Flex direction={"column"} minH="100vh">
+        <Box>
+          <Flex
+            h="20"
+            alignItems="center"
+            mx="8"
+            justifyContent="space-between"
+          >
+            <Text fontSize="2xl" fontWeight="extrabold">
+              MMO Toolkit
+            </Text>
+            <CloseButton
+              display={{ base: "flex", md: "none" }}
+              onClick={onClose}
+            />
+          </Flex>
+
+          {LinkItems.map((link) => (
+            <NextLink key={link.name} href={link.path}>
+              <NavItem icon={link.icon}>{link.name}</NavItem>
+            </NextLink>
+          ))}
+        </Box>
+        <Spacer />
+        <hr />
+        <Box textAlign="center" ml="-6">
+          <Button variant="link" leftIcon={<FaDoorOpen />} py="4">
+            Sign Out
+          </Button>
+        </Box>
       </Flex>
-      {LinkItems.map((link) => (
-        <NextLink key={link.name} href={link.path}>
-          <NavItem icon={link.icon}>{link.name}</NavItem>
-        </NextLink>
-      ))}
     </Box>
   );
 };
