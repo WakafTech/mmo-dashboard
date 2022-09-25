@@ -13,6 +13,8 @@ import {
 import type {NextPage} from "next";
 import {useState} from "react";
 import {Auth} from "../external-api/supabase/auth";
+import { GetServerSideProps } from "next";
+import { getUser } from "@supabase/auth-helpers-nextjs";
 
 const Login: NextPage = () => {
   const toast = useToast();
@@ -83,3 +85,19 @@ const Login: NextPage = () => {
 };
 
 export default Login;
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { user } = await getUser(context)
+  if (user) {
+    return {
+      redirect: {
+        destination: '/dashboard',
+        permanent: false,
+      },
+    }
+  }
+
+  return {
+    props: {}
+  }
+}

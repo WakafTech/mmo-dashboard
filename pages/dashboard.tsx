@@ -7,6 +7,7 @@ import { IconType } from 'react-icons';
 import {
     FiCompass, FiHome, FiMenu, FiSettings, FiStar, FiTrendingUp
 } from 'react-icons/fi';
+import { withPageAuth } from '@supabase/auth-helpers-nextjs'
 
 interface LinkItemProps {
   name: string;
@@ -141,3 +142,5 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
     </Flex>
   );
 };
+
+export const getServerSideProps = withPageAuth({ redirectTo: '/login' })

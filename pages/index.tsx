@@ -1,9 +1,20 @@
-import type { NextPage } from "next";
+import type {GetServerSideProps, NextPage} from "next";
 import Head from "next/head";
 import { Hero } from "../ui/Hero";
 import { Navbar } from "../ui/Navbar";
+import { useEffect } from "react";
+import { getUser } from "@supabase/auth-helpers-nextjs";
+
+import { Auth } from "../external-api/supabase/auth";
+import { useRouter } from "next/router";
 
 const Home: NextPage = () => {
+  const router = useRouter();
+
+  useEffect(() => {
+    Auth.handleOnAuthStateChange(router)
+  }, []);
+
   return (
     <div>
       <Head>
@@ -23,3 +34,19 @@ const Home: NextPage = () => {
 };
 
 export default Home;
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { user } = await getUser(context)
+  if (user) {
+    return {
+      redirect: {
+        destination: '/dashboard',
+        permanent: false,
+      },
+    }
+  }
+
+  return {
+    props: {}
+  }
+}
