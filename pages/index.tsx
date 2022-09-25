@@ -15,7 +15,7 @@ const Home: NextPage = () => {
     if (user) {
       router.push("/dashboard")
     }
-  }, [user])
+  }, [user, router])
 
   return (
     <div>

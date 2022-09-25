@@ -50,7 +50,7 @@ const Login: NextPage = () => {
         <Stack align={'center'}>
           <Heading fontSize={'4xl'}>Sign in to your account</Heading>
           <Text fontSize={'lg'} color={'gray.600'} textAlign="center">
-            No passwords required. We'll send you a magic link to login instead!
+            No passwords required. We{`'`}ll send you a magic link to login instead!
           </Text>
 
         </Stack>
