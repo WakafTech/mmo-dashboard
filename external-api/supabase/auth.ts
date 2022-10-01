@@ -3,7 +3,7 @@ import { supabaseClient } from '@supabase/auth-helpers-nextjs'
 
 
 const handleSignIn = async (email: string) => {
-  return await supabase.auth.signIn({email}, {shouldCreateUser: false, redirectTo: "https://mmo.sg/dashboard"});
+  return await supabase.auth.signIn({email}, {shouldCreateUser: false, redirectTo: "https://mmo.sg"});
 }
 
 const handleSignOut = async () => {
