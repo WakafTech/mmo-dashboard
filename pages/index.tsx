@@ -6,6 +6,8 @@ import {getUser} from "@supabase/auth-helpers-nextjs";
 import {useUser} from "@supabase/auth-helpers-react";
 import {useRouter} from "next/router";
 import {useEffect} from "react";
+import {setCookie} from "cookies-next";
+import {COOKIE_KEY_USER_ID} from "../configs/cookie";
 
 const Home: NextPage = () => {
   const {user} = useUser()
@@ -13,8 +15,11 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     if (user) {
+      const {email} = user
+      setCookie(COOKIE_KEY_USER_ID, email)
       router.push("/dashboard")
     }
+
   }, [user, router])
 
   return (

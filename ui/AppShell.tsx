@@ -27,6 +27,10 @@ import {
 } from "react-icons/fa";
 import { FiMenu } from "react-icons/fi";
 import NextLink from "next/link";
+import {Auth} from "../external-api/supabase/auth";
+import {useRouter} from "next/router";
+import {deleteCookie} from "cookies-next";
+import {Cookie} from "../configs/cookie";
 
 interface LinkItemProps {
   name: string;
@@ -81,6 +85,14 @@ interface SidebarProps extends BoxProps {
 }
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
+  const router = useRouter()
+
+  const onSignOut = async () => {
+    await Auth.handleSignOut()
+    Cookie.deleteOrganisationId()
+    await router.push("/")
+  }
+
   return (
     <Box
       bg={useColorModeValue("white", "gray.900")}
@@ -117,7 +129,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         <Spacer />
         <hr />
         <Box textAlign="center" ml="-6">
-          <Button variant="link" leftIcon={<FaDoorOpen />} py="4">
+          <Button onClick={onSignOut} variant="link" leftIcon={<FaDoorOpen />} py="4">
             Sign Out
           </Button>
         </Box>

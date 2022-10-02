@@ -8,21 +8,32 @@ import {
   Heading,
   Box,
   InputGroup,
-  InputLeftAddon,
+  InputLeftAddon
 } from "@chakra-ui/react";
 import { withPageAuth } from "@supabase/auth-helpers-nextjs";
 import { AppShell } from "../ui/AppShell";
+import {Db} from "../external-api/supabase/db";
+import {Cookie, COOKIE_KEY_ORGANISATION_ID, COOKIE_KEY_USER_ID} from "../configs/cookie";
+import {getCookie} from "cookies-next";
+import {useRouter} from "next/router";
 
 export const getServerSideProps = withPageAuth({ redirectTo: "/login" });
 
-const Dashboard = () => {
+const CreateShortLink = () => {
+  const router = useRouter();
   const {
     handleSubmit,
     register,
     formState: { errors, isSubmitting },
   } = useForm();
 
-  const onSubmit = (values: any) => {
+  const onSubmit = async (values: any) => {
+    const {path, destination} = values
+    const organisation = getCookie(COOKIE_KEY_ORGANISATION_ID) as string
+    const created_by = getCookie(COOKIE_KEY_USER_ID) as string
+
+    const response = await Db.insertShortLink({organisation, destination, path, created_by})
+    await router.push("/short-links")
   };
 
   return (
@@ -41,11 +52,12 @@ const Dashboard = () => {
                 placeholder="Your custom link"
                 {...register("path", {
                   required: "This is required",
-                })}
+                  }
+                )}
               />
             </InputGroup>
             <FormErrorMessage>
-              <>{errors?.path?.message}</>
+              <>{errors?.path?.message as string}</>
             </FormErrorMessage>
           </FormControl>
 
@@ -60,11 +72,15 @@ const Dashboard = () => {
                 placeholder="The link users should be redirected to"
                 {...register("destination", {
                   required: "This is required",
+                  pattern: {
+                    value: new RegExp("^([a-zA-Z0-9]+(\\.[a-zA-Z0-9]+)+.*)$"),
+                    message: "Invalid url"
+                  }
                 })}
               />
             </InputGroup>
             <FormErrorMessage>
-              <>{errors?.name?.message}</>
+              <>{errors?.destination?.message as string}</>
             </FormErrorMessage>
           </FormControl>
           <Button
@@ -72,6 +88,7 @@ const Dashboard = () => {
             colorScheme="teal"
             isLoading={isSubmitting}
             type="submit"
+            loadingText='Creating short link'
           >
             Create
           </Button>
@@ -81,4 +98,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default CreateShortLink;
