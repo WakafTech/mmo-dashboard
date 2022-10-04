@@ -1,21 +1,16 @@
 import {
   Box,
   Button,
-  ButtonGroup,
   Container,
-  Flex,
   Heading,
   HStack,
-  IconButton,
   useBreakpointValue,
   useColorModeValue,
 } from "@chakra-ui/react";
 import Link from "next/link";
-import * as React from "react";
-import { FiMenu } from "react-icons/fi";
+import { clientConfig } from "../configs/app-config";
 
 export const Navbar = () => {
-  const isDesktop = useBreakpointValue({ base: false, lg: true });
   return (
     <Box as="section" pb={{ base: "12", md: "24" }}>
       <Box
@@ -35,7 +30,9 @@ export const Navbar = () => {
               <Button variant="ghost" fontSize={{ base: "sm", sm: "md" }}>
                 Request Access
               </Button>
-              <Link href="/dashboard">
+              <Link
+                href={`https://auth.mmo.sg/login?redirectTo=${clientConfig.app.baseUrl}`}
+              >
                 <Button colorScheme="teal" fontSize={{ base: "sm", sm: "md" }}>
                   Sign In
                 </Button>

@@ -8,6 +8,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import Link from "next/link";
+import { clientConfig } from "../configs/app-config";
 
 export const Hero = () => {
   return (
@@ -38,7 +39,9 @@ export const Hero = () => {
           align={"center"}
           alignSelf={"center"}
         >
-          <Link href={"/login"}>
+          <Link
+            href={`https://auth.mmo.sg/login?redirectTo=${clientConfig.app.baseUrl}`}
+          >
             <Button colorScheme="teal" size="lg" px={12} fontWeight="bold">
               Sign In
             </Button>
